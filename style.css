@@ -1,0 +1,147 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* adding 2 variables to the css */
+:root {
+    --cell-size: 100px;
+    --xo-size: calc(var(--cell-size)* 0.9);
+}
+
+/* setting up board */
+.container {
+    width: 300px;
+    height: 300px;
+    display: grid;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    grid-gap: 3px;
+    background-color: black;
+    grid-template-columns: repeat(3, auto);
+    /*repeating the colums 3 time with auto sizing*/
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+}
+
+/* setting up the cell */
+.cell {
+    background-color: white;
+    width: var(--cell-size);
+    height: var(--cell-size);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* adding content to insert the cross*/
+.cell.x::before,
+.cell.x::after,
+/* creating a hover x where there is no x inserted or circle inserted */
+.container.x .cell:not(.x):not(.o):hover::before,
+.container.x .cell:not(.x):not(.o):hover::after {
+    content: '';
+    width: calc(var(--xo-size)*0.15);
+    height: var(--xo-size);
+    background-color: black;
+    /* giving position absolute for perfect fit */
+    position: absolute;
+}
+
+/* setting up the X */
+.cell.x::before,
+.container.x .cell:not(.x):not(.o):hover::before {
+    transform: rotate(45deg);
+}
+
+.cell.x::after,
+.container.x .cell:not(.x):not(.o):hover::after {
+    transform: rotate(-45deg);
+}
+
+/* adding content to insert the cicle */
+.cell.o::before,
+.cell.o::after,
+/* creating a hover o where there is no x inserted or circle inserted */
+.container.o .cell:not(.x):not(.o):hover::before,
+.container.o .cell:not(.x):not(.o):hover::after {
+    content: '';
+    border-radius: 100%;
+    position: absolute;
+}
+
+.cell.o::before,
+.container.o .cell:not(.x):not(.o):hover::before {
+    width: calc(var(--xo-size)*0.9);
+    height: calc(var(--xo-size)*0.9);
+    background-color: black;
+}
+
+.cell.o::after,
+.container.o .cell:not(.x):not(.o):hover::after {
+    width: calc(var(--xo-size)*0.65);
+    height: calc(var(--xo-size)*0.65);
+    background-color: white;
+}
+
+/* disabled cursor for cells with x and o */
+.cell.o,
+.cell.x {
+    cursor: not-allowed;
+}
+
+/* giving a gray hover background to cross  and circle */
+.container.x .cell:not(.x):not(.o):hover::before,
+.container.x .cell:not(.x):not(.o):hover::after,
+.container.o .cell:not(.x):not(.o):hover::before {
+    background-color: gray;
+}
+
+/* creating a restart pop message */
+.restart {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.85);
+    font-family: Arial, Helvetica, sans-serif;
+    flex-direction: column;
+
+}
+
+.restart p {
+    text-align: center;
+    color: white;
+    font-size: 4rem;
+}
+
+.restart button {
+    background-color: white;
+    padding: 0.5rem 2rem;
+    border: none;
+    font-size: 1.5rem;
+    border-radius: 20px;
+}
+
+.show {
+    display: flex;
+}
+
+.score {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 3rem;
+    padding-top: 50px;
+    font-size: 3rem;
+}
